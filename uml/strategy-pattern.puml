@@ -1,0 +1,47 @@
+@startuml
+title Strategy Pattern Calculator Example
+left to right direction
+skinparam classAttributeIconSize 0
+
+class CalculatorDemo <<Client>> {
+  + main(args: String[]): void
+}
+
+class Calculator <<Context>> {
+  - strategy: CalculationStrategy
+  + Calculator(strategy: CalculationStrategy)
+  + setStrategy(strategy: CalculationStrategy): void
+  + calculate(left: double, right: double): double
+}
+
+interface CalculationStrategy {
+  + name(): String
+  + symbol(): String
+  + calculate(left: double, right: double): double
+}
+
+class AddStrategy {
+  + name(): String
+  + symbol(): String
+  + calculate(left: double, right: double): double
+}
+class SubtractStrategy {
+  + name(): String
+  + symbol(): String
+  + calculate(left: double, right: double): double
+}
+class MultiplyStrategy {
+  + name(): String
+  + symbol(): String
+  + calculate(left: double, right: double): double
+}
+
+CalculatorDemo ..> Calculator : configures
+CalculatorDemo ..> AddStrategy : selects
+CalculatorDemo ..> SubtractStrategy : selects
+CalculatorDemo ..> MultiplyStrategy : selects
+Calculator --> CalculationStrategy : delegates through
+CalculationStrategy <|.. AddStrategy
+CalculationStrategy <|.. SubtractStrategy
+CalculationStrategy <|.. MultiplyStrategy
+@enduml
